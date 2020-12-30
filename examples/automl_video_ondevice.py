@@ -31,4 +31,4 @@ del sys.modules['automl_video_ondevice']
 sys.path.insert(0,
                 os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 # Imports actual module.
-import automl_video_ondevice  
+import automl_video_ondevice  # pylint: disable=g-import-not-at-top,unused-import

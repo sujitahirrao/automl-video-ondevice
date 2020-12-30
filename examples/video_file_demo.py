@@ -49,8 +49,8 @@ from automl_video_ondevice import object_tracking as vot
 import utils
 
 try:
-  import cv2  
-except:  
+  import cv2  # pylint: disable=g-import-not-at-top
+except:  # pylint: disable=bare-except
   print("Couldn't load cv2. Try running: sudo apt install python3-opencv.")
 
 
@@ -98,13 +98,14 @@ def main():
 
     # Resizes frame.
     resized_frame = cv2.resize(frame, (input_size.width, input_size.height))
+    rgb_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
 
     # Calculates current microsecond for timestamp.
     timestamp = int(timestamp + (1/cap.get(cv2.CAP_PROP_FPS)) * 1000 * 1000)
 
     # Run inference engine to populate annotations array.
     annotations = []
-    if engine.run(timestamp, resized_frame, annotations):
+    if engine.run(timestamp, rgb_frame, annotations):
       frame = utils.render_bbox(frame, annotations)
 
     if writer:
